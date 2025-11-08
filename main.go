@@ -85,13 +85,13 @@ func main() {
 			_, ok := a.(string)
 			return ok
 		},
-		"hasEnabledItems": func(m map[string]any) (bool, error) {
-			items, ok := m["items"].([]any)
-			if !ok {
-				return false, fmt.Errorf("non-section passed")
+		"sectionEmpty": func(m map[string]any) (bool, error) {
+			_, ok := m["body"].(string)
+			if ok {
+				return false, nil
 			}
 
-			for _, item := range items {
+			for _, item := range m["items"].([]any) {
 				item_, ok := item.(map[string]any)
 				if !ok {
 					return false, fmt.Errorf("non-section passed")
@@ -99,7 +99,7 @@ func main() {
 
 				disabled, found := item_["disabled"]
 				if !found {
-					return true, nil
+					return false, nil
 				}
 
 				disabled_, ok := disabled.(bool)
@@ -108,11 +108,11 @@ func main() {
 				}
 
 				if ok && !disabled_ {
-					return true, nil
+					return false, nil
 				}
 			}
 
-			return false, nil
+			return true, nil
 		},
 		"markdown": func(s string) (template.HTML, error) {
 			source := []byte(s)

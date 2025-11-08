@@ -61,6 +61,9 @@ properties:
         title:
           type: string
           description: The title of the section
+        body:
+          type: string
+          description: Markdown to display as the section's body
         items:
           type: array
           description: The items to include in this section
@@ -111,7 +114,6 @@ properties:
               - title
       required:
         - title
-        - items
   footnote:
     type: string
     description: Note to display at the bottom

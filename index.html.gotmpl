@@ -207,9 +207,12 @@
         {{ .about.summary }}
       {{- end }}
       {{- range $section := .sections }}
-        {{- if hasEnabledItems $section }}
+        {{- if not (sectionEmpty $section) }}
       <h2 id="{{ $section.title }}">{{ $section.title }}</h2>
       <hr />
+          {{- if $section.body }}
+      <div class="markdown">{{ markdown $section.body }}</div>
+          {{- end }}
           {{- range $item := $section.items }}
             {{- if not $item.disabled }}
       <div style="padding-top: 0.5rem; display: flex; gap: 0.25rem;">
