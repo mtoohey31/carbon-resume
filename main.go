@@ -13,6 +13,7 @@ import (
 	"github.com/alecthomas/kong"
 	"github.com/qri-io/jsonschema"
 	"github.com/yuin/goldmark"
+	"github.com/yuin/goldmark/renderer/html"
 	"github.com/yuin/goldmark/text"
 	"gopkg.in/yaml.v3"
 )
@@ -72,7 +73,7 @@ func main() {
 	// Template setup.
 
 	tmpl := template.New("resume")
-	markdown := goldmark.New()
+	markdown := goldmark.New(goldmark.WithRendererOptions(html.WithUnsafe()))
 	tmpl.Funcs(template.FuncMap{
 		"join": func(a []any, sep string) string {
 			elems := make([]string, len(a))
